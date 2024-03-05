@@ -1,8 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-const apiKey = 'AIzaSyBgRCuMmoQfLdmEFu2lD-9tXTEq03tShsM';
+const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 
 export const useAuthStore = defineStore('auth', () => {
   const userInfo = ref({
@@ -15,6 +16,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const error = ref('');
   const loader = ref(false);
+
+  const router = useRouter();
 
   const auth = async (payload, type: string) => {
     const stringUrl = type === 'signup' ? 'signUp' : 'signInWithPassword'
@@ -35,7 +38,9 @@ export const useAuthStore = defineStore('auth', () => {
         refreshToken: response.data.refreshToken,
         expiresIn: response.data.expiresIn,
       }
-      console.log(response.data);
+
+      router.push('/about')
+
     } catch (err) {
       switch (err.response.data.error.message) {
         case 'EMAIL_EXISTS':

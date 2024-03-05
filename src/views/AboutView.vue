@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <h1>Главная</h1>
+    <h1>Эбаут</h1>
   </main>
 </template>
