@@ -16,12 +16,14 @@ export const useAuthStore = defineStore('auth', () => {
   const error = ref('');
   const loader = ref(false);
 
-  const signup = async (payload) => {
+  const auth = async (payload, type: string) => {
+    const stringUrl = type === 'signup' ? 'signUp' : 'signInWithPassword'
+
     error.value = '';
     loader.value = true;
 
     try {
-      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`, {
+      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
         ...payload,
         returnSecureToken: true,
       })
@@ -47,6 +49,14 @@ export const useAuthStore = defineStore('auth', () => {
         case 'TOO_MANY_ATTEMPTS_TRY_LATER':
           error.value = 'Слишком много попыток, попробуйте позже'
           break;
+
+        case 'EMAIL_NOT_FOUND':
+          error.value = 'Такой Email не зарегистрирован'
+          break;
+
+        case 'INVALID_PASSWORD':
+          error.value = 'Не верный пароль'
+          break;
       
         default:
           error.value = 'Ошибка'
@@ -61,6 +71,6 @@ export const useAuthStore = defineStore('auth', () => {
     userInfo,
     error,
     loader,
-    signup, 
+    auth, 
   }
 })

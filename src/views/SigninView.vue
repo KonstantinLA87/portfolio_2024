@@ -1,5 +1,5 @@
 <template>
-    <h2>Sign Up</h2>
+    <h2>Sign In</h2>
     <form class="flex flex-column gap-3" action="">
         <Message v-if="authStore.error" severity="warn">
             {{ authStore.error }}
@@ -29,8 +29,8 @@
 
         <LoaderSpinner v-if="authStore.loader" />
         <div v-else class="flex flex-column gap-3">
-            <Button label="Sign up" @click="signup" />
-            <span>Вы уже зарегестрированы? <router-link to="/signin">Sign in</router-link></span>
+            <Button label="Sign In" @click="signin" />
+            <span>Вы еще не зарегистрированы? <router-link to="/signup">Sign up</router-link></span>
         </div>
     </form>
 </template>
@@ -50,11 +50,11 @@ const password = ref('');
 
 const authStore = useAuthStore();
 
-const signup = async () => {
+const signin = async () => {
     await authStore.auth({
         email: email.value, 
         password: password.value
-    }, 'signup')
+    }, 'signin')
 }
 </script>
 
