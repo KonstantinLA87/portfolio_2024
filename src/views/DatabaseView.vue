@@ -29,7 +29,7 @@ const showLoader = ref(false)
 const getAllCards = async () => {
     showLoader.value = true
     try {
-        const response = await axios.get(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json?auth=${authStore.userInfo.token}`)
+        const response = await axios.get(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
         cars.value = response.data
     } catch (error) {
         console.log(error.response)
