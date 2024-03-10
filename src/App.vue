@@ -11,14 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useAuthStore } from './stores/auth';
-import router from './router';
+import { computed } from 'vue'
+import { useAuthStore } from './stores/auth'
+import router from './router'
 
-const authStore = useAuthStore();
+const authStore = useAuthStore()
 
 const userCheck = () => {
-    const tokens = JSON.parse(localStorage.getItem('userTokens'))
+    const tokens = JSON.parse(localStorage.getItem('userTokens') || '""')
 
     if (tokens) {
         authStore.userInfo.token = tokens.token
@@ -34,7 +34,6 @@ const logout = () => {
     authStore.logout()
     localStorage.removeItem('userTokens')
     router.push('/')
-    
 }
 </script>
 

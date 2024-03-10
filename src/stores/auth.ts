@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import axios from 'axios';
 import axiosApiInstance from '@/api'
+import type { signinPayload } from '@/types/auth';
 
 const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 
@@ -17,22 +17,22 @@ export const useAuthStore = defineStore('auth', () => {
     const loader = ref(false);
 
     // Authentification
-    const auth = async (payload, type: string) => {
+    const auth = async (payload: signinPayload, type: string) => {
         const stringUrl = type === 'signup' ? 'signUp' : 'signInWithPassword'
 
         error.value = '';
         loader.value = true;
 
         try {
-            const response = await axiosApiInstance.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
+            const { data } = await axiosApiInstance.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
                 ...payload,
                 returnSecureToken: true,
             })
             userInfo.value = {
-                token: response.data.idToken,
-                email: response.data.email,
-                userId: response.data.userId,
-                refreshToken: response.data.refreshToken,
+                token: data.idToken,
+                email: data.email,
+                userId: data.userId,
+                refreshToken: data.refreshToken,
             }
             localStorage.setItem('userTokens', JSON.stringify(
                 { 

@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { useAuthStore } from './stores/auth'
+import router from './router';
+import type { Token } from './types/auth';
 
 const axiosApiInstance = axios.create()
 
@@ -7,7 +9,7 @@ const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 
 axiosApiInstance.interceptors.request.use((config) => {
     const url = config.url
-    if (!url.includes('signInWithPassword') && !url?.includes('signUp')) {
+    if (!url?.includes('signInWithPassword') && !url?.includes('signUp')) {
         const authStore = useAuthStore()
         const params = new URLSearchParams()
         params.append('auth', authStore.userInfo.token)
@@ -27,18 +29,18 @@ axiosApiInstance.interceptors.response.use((response) => {
             originalRequest._retry = true
 
             try {
-                const newTokens = await axios.post(
+                const { data } = await axios.post<Token>(
                     `https://securetoken.googleapis.com/v1/token?key=${apiKey}`, {
                         grant_type: 'refresh_token',
-                        refresh_token: JSON.parse(localStorage.getItem('userTokens')).refreshToken
+                        refresh_token: JSON.parse(localStorage.getItem('userTokens') as string).refreshToken
                     }
                 )
-                authStore.userInfo.token = newTokens.data.access_token
-                authStore.userInfo.refreshToken = newTokens.data.refresh_token
+                authStore.userInfo.token = data.access_token
+                authStore.userInfo.refreshToken = data.refresh_token
 
                 localStorage.setItem('userTokens', JSON.stringify({
-                    token: newTokens.data.value.token, 
-                    refreshToken: newTokens.data.value.refresh_token,
+                    token: data.access_token, 
+                    refreshToken: data.refresh_token,
                 }))
                 
             } catch (error) {
