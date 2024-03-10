@@ -1,4 +1,4 @@
-import './assets/main.css'
+import './assets/main.scss'
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
