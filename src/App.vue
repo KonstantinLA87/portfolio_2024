@@ -4,6 +4,7 @@
             <RouterLink class="nav__link" to="/">Главная</RouterLink>
             <RouterLink class="nav__link" to="/signin" v-if="!token">Вход</RouterLink>
             <RouterLink class="nav__link" to="/database" v-if="token">База данных</RouterLink>
+            <RouterLink class="nav__link" to="/logout" v-if="token" @click.prevent="logout">Выход</RouterLink>
         </div>
         <RouterView />
     </div>
@@ -12,6 +13,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useAuthStore } from './stores/auth';
+import router from './router';
 
 const authStore = useAuthStore();
 
@@ -21,14 +23,19 @@ const userCheck = () => {
     if (tokens) {
         authStore.userInfo.token = tokens.token
         authStore.userInfo.refreshToken = tokens.refreshToken
-        authStore.userInfo.expiresIn = tokens.expiresIn
     }
-    console.log('userInfo', authStore.userInfo)
 }
 
 const token = computed(() => authStore.userInfo.token)
 
 userCheck()
+
+const logout = () => {
+    authStore.logout()
+    localStorage.removeItem('userTokens')
+    router.push('/')
+    
+}
 </script>
 
 <style scoped></style>

@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios';
-import { useRouter } from 'vue-router';
+import axiosApiInstance from '@/api'
 
 const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 
@@ -11,14 +11,12 @@ export const useAuthStore = defineStore('auth', () => {
         email: '',
         userId: '',
         refreshToken: '',
-        expiresIn: '',
     })  
 
     const error = ref('');
     const loader = ref(false);
 
-    const router = useRouter();
-
+    // Authentification
     const auth = async (payload, type: string) => {
         const stringUrl = type === 'signup' ? 'signUp' : 'signInWithPassword'
 
@@ -26,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
         loader.value = true;
 
         try {
-            const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
+            const response = await axiosApiInstance.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
                 ...payload,
                 returnSecureToken: true,
             })
@@ -35,13 +33,11 @@ export const useAuthStore = defineStore('auth', () => {
                 email: response.data.email,
                 userId: response.data.userId,
                 refreshToken: response.data.refreshToken,
-                expiresIn: response.data.expiresIn,
             }
             localStorage.setItem('userTokens', JSON.stringify(
                 { 
                     token: userInfo.value.token, 
                     refreshToken: userInfo.value.refreshToken,
-                    expiresIn: userInfo.value.expiresIn,
                 }
             ))
         } catch (err) {
@@ -75,10 +71,21 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    // Logout
+    const logout = () => {
+        userInfo.value = {
+            token: '',
+            email: '',
+            userId: '',
+            refreshToken: '',
+        }
+    }
+
     return {
         userInfo,
         error,
         loader,
         auth,
+        logout,
     }
 })

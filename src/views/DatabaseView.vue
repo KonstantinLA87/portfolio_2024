@@ -20,6 +20,7 @@ import axios from 'axios'
 import LoaderSpinner from '@/components/LoaderSpinner.vue'
 import Card from 'primevue/card'
 import { onMounted, ref } from 'vue'
+import axiosApiInstance from '@/api'
 
 const authStore = useAuthStore()
 
@@ -29,7 +30,7 @@ const showLoader = ref(false)
 const getAllCards = async () => {
     showLoader.value = true
     try {
-        const response = await axios.get(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
+        const response = await axiosApiInstance.get(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
         cars.value = response.data
     } catch (error) {
         console.log(error.response)
