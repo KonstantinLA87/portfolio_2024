@@ -1,7 +1,7 @@
 <template>
     <main>
         <h1>Машины</h1>
-        <LoaderSpinner v-if="showLoader" />
+        <LoaderSpinner v-if="databaseStore.loader" />
         <div v-else class="flex flex-column gap-3">
             <div
                 v-for="(carsGroup, i) in cars" 
@@ -22,26 +22,16 @@
 import LoaderSpinner from '@/components/LoaderSpinner.vue'
 import Card from 'primevue/card'
 import { onMounted, ref } from 'vue'
-import axiosApiInstance from '@/api'
+// import axiosApiInstance from '@/api'
 import type { CarsCompany } from '@/types/database';
+import { useDatabaseStore } from '@/stores/database';
+
+const databaseStore = useDatabaseStore()
 
 const cars = ref<CarsCompany[]>()
-const showLoader = ref(false)
 
-const getAllCards = async () => {
-    showLoader.value = true
-    try {
-        const { data } = await axiosApiInstance.get<CarsCompany[]>(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
-
-        cars.value = data
-    } catch (error) {
-        console.log(error)
-    } finally {
-        showLoader.value = false
-    }
-}
-
-onMounted(() => {
-    getAllCards()
+onMounted( async () => {
+    await databaseStore.getAllCards()
+    cars.value = databaseStore.cars
 })
 </script>

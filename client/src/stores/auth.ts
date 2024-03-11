@@ -12,7 +12,6 @@ export const useAuthStore = defineStore('auth', () => {
         userId: '',
         refreshToken: '',
     })  
-
     const error = ref('');
     const loader = ref(false);
 
