@@ -1,30 +1,32 @@
 <template>
-    <h2>Sign In</h2>
-    <form class="flex flex-column gap-3" action="">
-        <Message v-if="authStore.error" severity="warn">
-            {{ authStore.error }}
-        </Message>
-
-        <div class="p-inputgroup flex-1">
-            <span class="p-inputgroup-addon">
-                <i class="pi pi-user"></i>
-            </span>
-            <InputText type="mail" placeholder="Your Email" v-model="email" />
-        </div>
-
-        <div class="p-inputgroup flex-1">
-            <span class="p-inputgroup-addon">
-                <i class="pi pi-at"></i>
-            </span>
-            <InputText type="password" placeholder="Enter password" v-model="password" />
-        </div>
-
-        <LoaderSpinner v-if="authStore.loader" />
-        <div v-else class="flex flex-column gap-3">
-            <Button label="Sign In" @click="signin" />
-            <span>Вы еще не зарегистрированы? <router-link to="/signup">Sign up</router-link></span>
-        </div>
-    </form>
+    <div class="form-wrap">
+        <h2>Sign In</h2>
+        <form class="flex flex-column gap-3" action="">
+            <Message v-if="authStore.error" severity="warn">
+                {{ authStore.error }}
+            </Message>
+    
+            <div class="p-inputgroup flex-1">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-user"></i>
+                </span>
+                <InputText type="mail" placeholder="Your Email" v-model="email" />
+            </div>
+    
+            <div class="p-inputgroup flex-1">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-at"></i>
+                </span>
+                <InputText type="password" placeholder="Enter password" v-model="password" />
+            </div>
+    
+            <LoaderSpinner v-if="authStore.loader" />
+            <div v-else class="flex flex-column gap-3">
+                <Button label="Sign In" @click="signin" />
+                <span>Вы еще не зарегистрированы? <router-link to="/signup">Sign up</router-link></span>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script setup lang="ts">
