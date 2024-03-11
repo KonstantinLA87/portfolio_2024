@@ -4,6 +4,7 @@ import SignupView from '@/views/SignupView.vue'
 import SigninView from '@/views/SigninView.vue'
 import DatabaseView from '@/views/DatabaseView.vue'
 import ChatView from '@/views/ChatView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
@@ -42,6 +43,14 @@ const router = createRouter({
             path: '/chat',
             name: 'chat',
             component: ChatView,
+            meta: {
+                auth: true,
+            }
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: ProfileView,
             meta: {
                 auth: true,
             }

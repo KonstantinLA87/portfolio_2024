@@ -16,13 +16,17 @@
                 </RouterLink>
             </div>
             <div class="nav__right">
-                <RouterLink class="nav__link" to="/logout" v-if="token" @click.prevent="logout">
-                    <span>Выход</span>
-                    <i class="pi pi-sign-out"></i>
+                <RouterLink class="nav__link" to="/profile" v-if="token">
+                    <i class="pi pi-user"></i>
+                    <span>Профиль</span>
                 </RouterLink>
                 <RouterLink class="nav__link" to="/signin" v-if="!token">
                     <span>Вход</span>
                     <i class="pi pi-sign-in"></i>
+                </RouterLink>
+                <RouterLink class="nav__link" to="/logout" v-if="token" @click.prevent="logout">
+                    <span>Выход</span>
+                    <i class="pi pi-sign-out"></i>
                 </RouterLink>
             </div>
         </div>
