@@ -32,15 +32,18 @@ const emit = defineEmits(['update:modelValue'])
 
 const isShowBtn = ref(false)
 
-const handlerInputChange = (event) => {
-    emit('update:modelValue', event.target.value)
+const handlerInputChange = (event: InputEvent) => {
+    emit('update:modelValue', (event.target as HTMLInputElement).value)
 }
 
-watch(() => [props.modelValue, props.valueOrigin], ([modelValue, valueOrigin]) => {
-    if (modelValue !== valueOrigin) {
-        isShowBtn.value = true
-    } else {
-        isShowBtn.value = false
+watch(
+    () => [props.modelValue, props.valueOrigin],
+    ([modelValue, valueOrigin]) => {
+        if (modelValue !== valueOrigin) {
+            isShowBtn.value = true
+        } else {
+            isShowBtn.value = false
+        }
     }
-})
+)
 </script>
