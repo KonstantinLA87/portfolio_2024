@@ -40,7 +40,8 @@ export const useAuthStore = defineStore('auth', () => {
             if (type === 'signup') {
                 await setDoc(doc(db, "users", data.localId), {
                     id: data.localId,
-                    nickname: ''
+                    nickname: '',
+                    room: ''
                 });
             }
             
