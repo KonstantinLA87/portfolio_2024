@@ -1,16 +1,18 @@
 <template>
-    <FloatLabel>
-        <InputText id="username" :value="props.modelValue" @input="handlerInputChange" />
-        <label for="username">{{ props.label }}</label>
-        <Button
-            class="invisible ml-3"
-            @click="onClick"
-            :class="{
-                active: isShowBtn
-            }"
-            >Сохранить</Button
-        >
-    </FloatLabel>
+    <div class="input-wrap">
+        <FloatLabel>
+            <InputText class="p-filled" :id="props.name" :value="props.modelValue" @input="handlerInputChange" />
+            <label :for="props.name">{{ props.label }}</label>
+            <Button
+                class="invisible ml-3"
+                @click="onClick"
+                :class="{
+                    active: isShowBtn
+                }"
+                >Сохранить</Button
+            >
+        </FloatLabel>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +22,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
 interface Props {
+    name: string
     label: string
     modelValue: string
     valueOrigin: string

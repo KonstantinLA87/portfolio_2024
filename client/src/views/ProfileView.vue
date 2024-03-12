@@ -1,13 +1,15 @@
 <template>
     <h1>Профиль</h1>
-    <div class="profile__inputs-wrap">
+    <div class="profile__wrap">
         <InputWithInvisibleBtn 
+            name="nickname"
             label="Никнейм в чате" 
             v-model="nickname" 
             :valueOrigin="nicknameOrigin"
             :onClick="saveNickname" 
         />
         <InputWithInvisibleBtn 
+            name="room"
             label="Комната в чате" 
             v-model="room" 
             :valueOrigin="roomOrigin"
