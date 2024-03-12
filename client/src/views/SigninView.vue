@@ -10,19 +10,19 @@
                 <span class="p-inputgroup-addon">
                     <i class="pi pi-user"></i>
                 </span>
-                <InputText type="mail" placeholder="Your Email" v-model="email" />
+                <InputText class="big" type="mail" placeholder="Your Email" v-model="email" />
             </div>
     
             <div class="p-inputgroup flex-1">
                 <span class="p-inputgroup-addon">
                     <i class="pi pi-at"></i>
                 </span>
-                <InputText type="password" placeholder="Enter password" v-model="password" />
+                <InputText class="big" type="password" placeholder="Enter password" v-model="password" />
             </div>
     
             <LoaderSpinner v-if="authStore.loader" />
             <div v-else class="flex flex-column gap-3">
-                <Button label="Sign In" @click="signin" />
+                <Button class="big" label="Sign In" @click="signin" />
                 <span>Вы еще не зарегистрированы? <router-link to="/signup">Sign up</router-link></span>
             </div>
         </form>
@@ -39,6 +39,8 @@ import LoaderSpinner from '@/components/LoaderSpinner.vue'
 
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const email = ref('')
 const password = ref('')
