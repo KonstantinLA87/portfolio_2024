@@ -1,11 +1,12 @@
 <template>
     <h1>Профиль</h1>
     <div class="profile__inputs-wrap">
-        <FloatLabel>
-            <InputText id="username" v-model="nickname" />
-            <label for="username">Никнейм в чате</label>
-            <Button @click="saveNickname">Сохранить</Button>
-        </FloatLabel>
+        <InputWithInvisibleBtn 
+            label="Никнейм в чате" 
+            v-model="nickname" 
+            :valueOrigin="nicknameOrigin"
+            :onClick="saveNickname" 
+        />
     </div>
 </template>
 
@@ -13,15 +14,14 @@
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { db } from '@/main'
-import { collection, doc, updateDoc, setDoc, getDoc } from 'firebase/firestore'
+import {doc, updateDoc, getDoc } from 'firebase/firestore'
 
-import FloatLabel from 'primevue/floatlabel'
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
+import InputWithInvisibleBtn from '@/components/InputWithInvisibleBtn.vue'
 
 const authStore = useAuthStore()
 
 const nickname = ref('')
+const nicknameOrigin = ref('')
 
 const saveNickname = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {
@@ -35,6 +35,7 @@ onMounted(async () => {
 
     if (docSnap.exists()) {
         nickname.value = docSnap.data().nickname
+        nicknameOrigin.value = docSnap.data().nickname
     } else {
         console.log('No such document!')
     }

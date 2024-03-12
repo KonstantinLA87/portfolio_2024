@@ -87,6 +87,17 @@ a {
   &.big {
     padding: 1rem;
   }
+
+  &.invisible {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
 }
 
 .p-float-label label {
