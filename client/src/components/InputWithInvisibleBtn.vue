@@ -32,7 +32,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const isShowBtn = ref(false)
 
-const handlerInputChange = (event: InputEvent) => {
+const handlerInputChange = (event: Event) => {
     emit('update:modelValue', (event.target as HTMLInputElement).value)
 }
 
