@@ -6,12 +6,12 @@ import 'primeflex/primeflex.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import PrimeVue from 'primevue/config';
 import './api'
 
 import App from './App.vue'
 import router from './router'
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgRCuMmoQfLdmEFu2lD-9tXTEq03tShsM",
@@ -22,7 +22,7 @@ const firebaseConfig = {
     appId: "1:487296298581:web:5242c12b217c5cfb796edc"
 };
 
-initializeApp(firebaseConfig);
+export const db = getFirestore(initializeApp(firebaseConfig))
 
 const app = createApp(App)
 

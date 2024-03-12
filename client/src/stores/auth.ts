@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 import axiosApiInstance from '@/api'
 import type { signinPayload } from '@/types/auth';
 
+import { db } from '@/main';
+import { collection, doc, setDoc } from 'firebase/firestore'
+
 const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 
 export const useAuthStore = defineStore('auth', () => {
@@ -30,13 +33,22 @@ export const useAuthStore = defineStore('auth', () => {
             userInfo.value = {
                 token: data.idToken,
                 email: data.email,
-                userId: data.userId,
+                userId: data.localId,
                 refreshToken: data.refreshToken,
             }
+            
+            if (type === 'signup') {
+                await setDoc(doc(db, "users", data.localId), {
+                    id: data.localId,
+                    nickname: ''
+                });
+            }
+            
             localStorage.setItem('userTokens', JSON.stringify(
                 { 
                     token: userInfo.value.token, 
                     refreshToken: userInfo.value.refreshToken,
+                    userId: userInfo.value.userId, 
                 }
             ))
         } catch (err) {
