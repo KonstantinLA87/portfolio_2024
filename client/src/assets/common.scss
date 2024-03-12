@@ -78,11 +78,30 @@ a {
 }
 
 .p-inputtext {
-  padding: 1rem 0.75rem;
+  &.big {
+    padding: 1rem 0.75rem;
+  }
 }
 
 .p-button {
-  padding: 1rem;
+  &.big {
+    padding: 1rem;
+  }
+}
+
+.p-float-label label {
+  top: 30%;
+}
+
+.p-float-label:has(input:focus) label, 
+.p-float-label:has(input.p-filled) label, 
+.p-float-label:has(input:-webkit-autofill) label, 
+.p-float-label:has(textarea:focus) label, 
+.p-float-label:has(textarea.p-filled) label, 
+.p-float-label:has(.p-inputwrapper-focus) label, 
+.p-float-label:has(.p-inputwrapper-filled) label {
+  top: -1.25rem;
+  left: 0;
 }
 
 .loader-spinner__wrap {
