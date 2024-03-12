@@ -29,6 +29,11 @@ import { useRoute, useRouter } from "vue-router"
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue"
 import { io, type Socket } from "socket.io-client"
 import { type User, type Chat } from '@/types/chat'
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/main";
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -44,12 +49,17 @@ const onSubmit = async () => {
     await nextTick(() => (message.value = ""))
 }
 
-onMounted(() => {
+onMounted(async () => {
+    const docRef = doc(db, 'users', authStore.userInfo.userId)
+    const docSnap = await getDoc(docRef)
+
+    // WEBSOCKETS
     socket.value = io("http://localhost:4000")
-    const { username, room } = route.query as Partial<Chat>
+    const username = docSnap.data()?.nickname
+    const room = docSnap.data()?.room
 
     if (!username || !room) {
-        router.push("/");
+        router.push("/profile");
     }
 
     socket.value?.emit("joinRoom", { username, room })
