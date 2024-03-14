@@ -2,19 +2,29 @@
     <h1>Профиль</h1>
     <div class="profile__wrap">
         <InputWithInvisibleBtn 
+            type="input"
             name="nickname"
             label="Никнейм в чате" 
             v-model="nickname" 
             :valueOrigin="nicknameOrigin"
             :onClick="saveNickname" 
         />
-        <InputWithInvisibleBtn 
+        <CustomDropdown 
+            type="select"
+            :options="rooms" 
+            @optionSelected="onOptionSelected"
+            :valueOrigin="roomOrigin"
+            :onClick="saveRoom"
+        />
+        <!-- <InputWithInvisibleBtn 
+            type="select"
             name="room"
             label="Комната в чате" 
             v-model="room" 
             :valueOrigin="roomOrigin"
+            :options="rooms"
             :onClick="saveRoom" 
-        />
+        /> -->
     </div>
 </template>
 
@@ -25,14 +35,17 @@ import { db } from '@/main'
 import {doc, updateDoc, getDoc } from 'firebase/firestore'
 
 import InputWithInvisibleBtn from '@/components/InputWithInvisibleBtn.vue'
+import type { Room } from '@/types/chat';
+import CustomDropdown from '@/components/CustomDropdown.vue'
 
 const authStore = useAuthStore()
 
 const nickname = ref('')
 const nicknameOrigin = ref('')
 
-const room = ref('')
-const roomOrigin = ref('')
+const room = ref<Room>('Первая')
+const roomOrigin = ref<Room>('Первая')
+const rooms = ref<Room[]>(['Первая', 'Вторая'])
 
 const saveNickname = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {
@@ -44,6 +57,11 @@ const saveRoom = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {
         room: room.value
     })
+}
+
+const onOptionSelected = (option: Room) => {
+    room.value = option
+    saveRoom()
 }
 
 onMounted(async () => { 

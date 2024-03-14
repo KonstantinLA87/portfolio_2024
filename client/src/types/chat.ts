@@ -10,3 +10,5 @@ export type User = {
     username: string;
     room: string;
 };
+
+export type Room = 'Первая' | 'Вторая'
