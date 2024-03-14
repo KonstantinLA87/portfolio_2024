@@ -1,20 +1,27 @@
 <template>
     <h1>Профиль</h1>
     <div class="profile__wrap">
-        <InputWithInvisibleBtn 
-            name="nickname"
-            label="Никнейм в чате" 
-            v-model="nickname" 
+        <InvisibleSaveBtn 
+            label="Никнейм"
+            :some="nickname"
             :valueOrigin="nicknameOrigin"
-            :onClick="saveNickname" 
-        />
-        <InputWithInvisibleBtn 
-            name="room"
-            label="Комната в чате" 
-            v-model="room" 
+            :onClick="saveNickname"
+        >
+            <InputText 
+                v-model="nickname"
+            />
+        </InvisibleSaveBtn>
+        <InvisibleSaveBtn 
+            label="Выберите чат"
+            :some="room"
             :valueOrigin="roomOrigin"
-            :onClick="saveRoom" 
-        />
+            :onClick="saveRoom"
+        >
+            <Dropdown 
+                v-model="room"
+                :options="rooms"
+            />
+        </InvisibleSaveBtn>
     </div>
 </template>
 
@@ -24,26 +31,33 @@ import { useAuthStore } from '@/stores/auth'
 import { db } from '@/main'
 import {doc, updateDoc, getDoc } from 'firebase/firestore'
 
-import InputWithInvisibleBtn from '@/components/InputWithInvisibleBtn.vue'
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
+import InvisibleSaveBtn from '@/components/InvisibleSaveBtn.vue'
+
+import type { Room } from '@/types/chat';
 
 const authStore = useAuthStore()
 
 const nickname = ref('')
 const nicknameOrigin = ref('')
 
-const room = ref('')
-const roomOrigin = ref('')
+const room = ref<Room>('Первый чат')
+const roomOrigin = ref<Room>('Первый чат')
+const rooms = ref<Room[]>(['Первый чат', 'Второй чат'])
 
 const saveNickname = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {
         nickname: nickname.value
     })
+    nicknameOrigin.value = nickname.value
 }
 
 const saveRoom = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {
         room: room.value
     })
+    roomOrigin.value = room.value
 }
 
 onMounted(async () => { 
