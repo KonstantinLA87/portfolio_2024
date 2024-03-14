@@ -35,16 +35,16 @@ import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import InvisibleSaveBtn from '@/components/InvisibleSaveBtn.vue'
 
-import type { Room } from '@/types/chat';
+import { RoomType, type Room } from '@/types/chat';
 
 const authStore = useAuthStore()
 
 const nickname = ref('')
 const nicknameOrigin = ref('')
 
-const room = ref<Room>('Первый чат')
-const roomOrigin = ref<Room>('Первый чат')
-const rooms = ref<Room[]>(['Первый чат', 'Второй чат'])
+const room = ref<Room>(RoomType.FIRST)
+const roomOrigin = ref<Room>(RoomType.FIRST)
+const rooms = ref<Room[]>([RoomType.FIRST, RoomType.SECOND])
 
 const saveNickname = async () => {
     await updateDoc(doc(db, 'users', authStore.userInfo.userId), {

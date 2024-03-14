@@ -11,4 +11,9 @@ export type User = {
     room: string;
 }
 
-export type Room = 'Первый чат' | 'Второй чат'
+export enum RoomType {
+    FIRST = 'Первый чат',
+    SECOND = 'Второй чат'
+}
+
+export type Room = RoomType
