@@ -63,7 +63,8 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.auth && !authStore.userInfo.token) { 
         next('/signin')
-    } else if (!to.meta.auth && authStore.userInfo.token && !to.meta) {
+    } 
+    else if (to.meta.auth === false && authStore.userInfo.token) {
         next('/database')
     } else {
         next()
