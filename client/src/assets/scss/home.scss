@@ -1,0 +1,57 @@
+.about {
+    &__wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    &__item {
+        background: var(--background-mute);
+        padding: 20px;
+        border-radius: 12px;
+        min-width: 30%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        cursor: pointer;
+
+        &.disabled {
+            pointer-events: none;
+            cursor: auto;
+        }
+
+        &.green {
+            background: linear-gradient(135deg,rgba(0, 255, 149, .1), rgba(0, 255, 149, .2));
+
+            svg path {
+                fill: rgba(0, 255, 149, 1)
+            }
+        }
+
+        &.blue {
+            background: linear-gradient(135deg,rgba(0, 191, 255, 0.1), rgba(0, 191, 255, .2));
+
+            svg path {
+                fill: rgb(0, 191, 255)
+            }
+        }
+
+        &.yellow {
+            background: linear-gradient(135deg,rgba(242, 255, 0, 0.1), rgba(242, 255, 0, 0.2));
+
+            svg path {
+                fill: rgba(242, 255, 0, 1)
+            }
+        }
+
+        &-title {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+    }
+}
