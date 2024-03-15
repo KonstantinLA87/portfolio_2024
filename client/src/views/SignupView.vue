@@ -1,6 +1,6 @@
 <template>
     <div class="form-wrap">
-        <h2>Sign Up</h2>
+        <h1>Регистрация</h1>
         <form class="flex flex-column gap-3" action="">
             <Message v-if="authStore.error" severity="warn">
                 {{ authStore.error }}
@@ -13,7 +13,7 @@
                 <InputText 
                     class="big"
                     type="mail" 
-                    placeholder="Your Email" 
+                    placeholder="Придумайте email" 
                     v-model="email"
                     />
                 </div>
@@ -25,15 +25,15 @@
                     <InputText 
                     class="big"
                     type="password" 
-                    placeholder="Enter password" 
+                    placeholder="Введите пароль" 
                     v-model="password"
                 />
             </div>
     
             <LoaderSpinner v-if="authStore.loader" />
             <div v-else class="flex flex-column gap-3">
-                <Button class="big" label="Sign up" @click="signup" />
-                <span>Вы уже зарегестрированы? <router-link to="/signin">Sign in</router-link></span>
+                <Button class="big" label="Зарегистрироваться" @click="signup" />
+                <span>Вы уже зарегестрированы? <RouterLink to="/signin">Войти</RouterLink></span>
             </div>
         </form>
     </div>
