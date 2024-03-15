@@ -12,6 +12,15 @@
         >
             <AuthImg />
         </AboutItem>
+        <!-- database -->
+        <AboutItem
+            title="База данных"
+            text="Firebase Realtime Database"
+            :to="Router.DATABASE"
+            :color="AboutItemColor.YELLOW"
+            >
+            <DatabaseImg />
+        </AboutItem>
         <!-- chat -->
         <AboutItem
             title="Чат"
@@ -20,15 +29,6 @@
             :color="AboutItemColor.BLUE"
         >
             <ChatImg />
-        </AboutItem>
-        <!-- database -->
-        <AboutItem
-            title="База данных"
-            text="Firebase Realtime Database"
-            :to="Router.DATABASE"
-            :color="AboutItemColor.YELLOW"
-        >
-            <DatabaseImg />
         </AboutItem>
     </div>
 </template>

@@ -82,6 +82,10 @@ a {
 .p-inputtext {
   width: 250px;
 
+  &.mid {
+    padding: 0.75rem 0.75rem;
+  }
+
   &.big {
     padding: 1rem 0.75rem;
   }
@@ -93,8 +97,18 @@ a {
 }
 
 .p-button {
+  font-weight: 600;
+
+  &.mid {
+    padding: 0.75rem 1rem;
+  }
+
   &.big {
     padding: 1rem;
+  }
+
+  &-label {
+    font-weight: 600;
   }
 
   &.invisible {

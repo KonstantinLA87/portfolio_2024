@@ -1,52 +1,84 @@
 <template>
     <div>
-        <div>
-            <p>{{ currentRoom }}</p>
-            <span>Users</span>
-            <ul>
-                <li v-for="user in users" :key="user.id">{{ user.username }}</li>
-            </ul>
-        </div>
-        <div>
-            <h2>Chats</h2>
-            <div>
-                <div v-for="(chat, i) in chats" :key="i">
-                    <span class="name">{{ chat.username }}: </span>
-                    <span>{{ chat.text }} </span>
-                    <span> {{ chat.time }}</span>
+        <h1 class="chat__title">Чат</h1>
+        <span class="chat__title-room">{{ currentRoom }}</span>
+        <div class="chat__wrap">
+            <div class="chat__users">
+                <span class="chat__users-title">Пользователи:</span>
+                <ul class="chat__users-list">
+                    <li
+                        v-for="user in users"
+                        class="chat__users-item"
+                        :class="{
+                            'chat__users-item--owner': user.username === currentUser
+                        }"
+                        :key="user.id"
+                    >
+                        {{ user.username }}
+                    </li>
+                </ul>
+            </div>
+            <div class="chat__right">
+                <div class="chat__chat">
+                    <div
+                        v-for="(chat, i) in chats"
+                        class="chat__chat-message-wrap"
+                        :key="i"
+                        :class="{
+                            'chat__chat-message-wrap--owner': chat.username === currentUser,
+                            'chat__chat-message-wrap--admin': chat.username === 'Vue Chatapp Admin'
+                        }"
+                    >
+                        <div class="chat__chat-message">
+                            <span
+                                class="chat__chat-username"
+                                :class="{
+                                    hiden: chat.username === currentUser || chat.username === 'Vue Chatapp Admin'
+                                }"
+                                >{{ chat.username }}:
+                            </span>
+                            <span class="chat__chat-text">{{ chat.text }} </span>
+                            <span class="chat__chat-time"> {{ chat.time }}</span>
+                        </div>
+                    </div>
                 </div>
+                <form class="chat__input-wrap" @submit.prevent="onSubmit">
+                    <InputText class="chat__input mid" type="text" v-model="message" placeholder="Введите сообщение" />
+                    <Button type="submit">Отправить</Button>
+                </form>
             </div>
         </div>
-        <form @submit.prevent="onSubmit">
-            <input type="text" v-model="message">
-            <button type="submit">SEND</button>
-        </form>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router"
-import { ref, onMounted, onBeforeUnmount, nextTick } from "vue"
-import { io, type Socket } from "socket.io-client"
+import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { io, type Socket } from 'socket.io-client'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/main'
+import { useAuthStore } from '@/stores/auth'
+
+import InputText from 'primevue/inputtext'
+import Button from 'primevue/button'
+
 import { type User, type Chat } from '@/types/chat'
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/main";
-import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore()
 
 const route = useRoute()
 const router = useRouter()
 
-const message = ref("")
+const message = ref('')
 const chats = ref<Chat[]>([])
 const users = ref<User[]>([])
-const currentRoom = ref("")
+const currentRoom = ref('')
+const currentUser = ref('')
 const socket = ref<Socket>()
 
 const onSubmit = async () => {
-    socket.value?.emit("chatMessage", message.value)
-    await nextTick(() => (message.value = ""))
+    socket.value?.emit('chatMessage', message.value)
+    await nextTick(() => (message.value = ''))
 }
 
 onMounted(async () => {
@@ -54,15 +86,16 @@ onMounted(async () => {
     const docSnap = await getDoc(docRef)
 
     // WEBSOCKETS
-    socket.value = io("http://localhost:4000")
+    socket.value = io('http://localhost:4000')
     const username = docSnap.data()?.nickname
+    currentUser.value = docSnap.data()?.nickname
     const room = docSnap.data()?.room
 
     if (!username || !room) {
-        router.push("/profile");
+        router.push('/profile')
     }
 
-    socket.value?.emit("joinRoom", { username, room })
+    socket.value?.emit('joinRoom', { username, room })
 
     socket.value?.on('message', (message: Chat) => {
         chats.value.push(message)

@@ -10,7 +10,7 @@
                 <span class="p-inputgroup-addon">
                     <i class="pi pi-user"></i>
                 </span>
-                <InputText class="big" type="mail" placeholder="Ваш вымышленный email" v-model="email" />
+                <InputText class="big" type="mail" placeholder="Ваш email" v-model="email" />
             </div>
     
             <div class="p-inputgroup flex-1">

@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", (userData) => {
         const user = userJoin({ ...userData, id: socket.id });
         socket.join(user.room);
-        socket.broadcast.to(user.room).emit("message", formatMessage(botName, `${user.username} join the chat`));
+        socket.broadcast.to(user.room).emit("message", formatMessage(botName, `${user.username} вошел в чат`));
 
         io.to(user.room).emit("roomUsers", {
             room: user.room,
@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
         const user = userLeave(socket.id);
 
         if (user) {
-            io.to(user.room).emit("message", formatMessage(botName, `${user.username} leave the chat`));
+            io.to(user.room).emit("message", formatMessage(botName, `${user.username} вышел из чата`));
 
             io.to(user.room).emit("roomUsers", {
                 room: user.room,
