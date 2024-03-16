@@ -4,9 +4,58 @@
     opacity: .5;
   }
 
-  &__wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  &__item {
+    padding: 40px 20px 30px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+
+    &-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 700;
+      line-height: 1;
+      margin: 0 0 30px;
+      position: absolute;
+      left: 20px;
+      top: -7px;
+      padding: 0 10px;
+      background: var(--background-soft);
+    }
+    
+    &-content { 
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    &-left {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    &-right {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    &-info-icon {
+      color: #675d81;
+    }
+
+    &-note {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+      font-size: 13px;
+      border-radius: 8px;
+      height: 100%;
+      position: relative;
+      top: -4px;
+    }
   }
 }

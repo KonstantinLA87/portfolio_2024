@@ -1,28 +1,38 @@
 <template>
     <h1>Профиль</h1>
-    <div class="profile__wrap">
-        <InvisibleSaveBtn 
-            label="Никнейм"
-            :some="nickname"
-            :valueOrigin="nicknameOrigin"
-            :onClick="saveNickname"
-        >
-            <InputText 
-                v-model="nickname"
-            />
-        </InvisibleSaveBtn>
-        <InvisibleSaveBtn 
-            label="Выберите чат"
-            :some="room"
-            :valueOrigin="roomOrigin"
-            :onClick="saveRoom"
-        >
-            <Dropdown 
-                v-model="room"
-                :options="rooms"
-            />
-        </InvisibleSaveBtn>
-    </div>
+    
+    <!-- CHAT -->
+    <ProfileItem title="Чат">
+        <!-- Left -->
+        <template v-slot:left>
+            <InvisibleSaveBtn 
+                label="Никнейм"
+                :some="nickname"
+                :valueOrigin="nicknameOrigin"
+                :onClick="saveNickname"
+            >
+                <InputText 
+                    v-model="nickname"
+                />
+            </InvisibleSaveBtn>
+            <InvisibleSaveBtn 
+                label="Выберите чат"
+                :some="room"
+                :valueOrigin="roomOrigin"
+                :onClick="saveRoom"
+            >
+                <Dropdown 
+                    v-model="room"
+                    :options="rooms"
+                />
+            </InvisibleSaveBtn>
+        </template>
+        <!-- Note -->
+        <template v-slot:note>
+            <p>Никнейм обяззателен, чтобы войти в чат. Вы будете видеть только тех пользователей, которые находятся с вами в одной комнате.</p>
+            <p>Чат сделан с использованием технологии Websockets. Пока данные затираются при преходе на другие вкладки, но в дальнейшем я собираюсь исправить этот функционал и сохранять переписку в комнатах на локальном бэке используя Node.js</p>
+        </template>
+    </ProfileItem>
 </template>
 
 <script setup lang="ts">
@@ -36,6 +46,7 @@ import Dropdown from 'primevue/dropdown'
 import InvisibleSaveBtn from '@/components/InvisibleSaveBtn.vue'
 
 import { RoomType, type Room } from '@/types/chat';
+import ProfileItem from '@/components/ProfileItem.vue'
 
 const authStore = useAuthStore()
 
