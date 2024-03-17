@@ -44,7 +44,7 @@
                 </div>
                 <form class="chat__input-wrap" @submit.prevent="onSubmit">
                     <InputText class="chat__input mid" type="text" v-model="message" placeholder="Введите сообщение" />
-                    <Button type="submit">Отправить</Button>
+                    <Button type="submit" :disabled="!message">Отправить</Button>
                 </form>
             </div>
         </div>

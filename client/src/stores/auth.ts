@@ -4,7 +4,7 @@ import axiosApiInstance from '@/api'
 import type { signinPayload } from '@/types/auth';
 
 import { db } from '@/main';
-import { collection, doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 
 const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
 

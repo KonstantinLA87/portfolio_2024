@@ -3,8 +3,6 @@ import { defineStore } from 'pinia'
 import type { CarsCompany } from '@/types/database';
 import axiosApiInstance from '@/api';
 
-const apiKey = import.meta.env.VITE_API_KEY_FIREBASE;
-
 export const useDatabaseStore = defineStore('database', () => {
     const cars = ref<CarsCompany[]>()
     const loader = ref(false)

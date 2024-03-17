@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h1>Машины</h1>
+        <h1>База данных</h1>
         <LoaderSpinner v-if="databaseStore.loader" />
         <div v-else class="flex flex-column gap-3">
             <div
