@@ -26,58 +26,72 @@ export const useAuthStore = defineStore('auth', () => {
         loader.value = true;
 
         try {
-            const { data } = await axiosApiInstance.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
+            const res = await axiosApiInstance.post(`https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`, {
                 ...payload,
                 returnSecureToken: true,
             })
-            userInfo.value = {
-                token: data.idToken,
-                email: data.email,
-                userId: data.localId,
-                refreshToken: data.refreshToken,
-            }
-            
-            if (type === 'signup') {
-                await setDoc(doc(db, "users", data.localId), {
-                    id: data.localId,
-                    nickname: '',
-                    room: ''
-                });
-            }
-            
-            localStorage.setItem('userTokens', JSON.stringify(
-                { 
-                    token: userInfo.value.token, 
-                    refreshToken: userInfo.value.refreshToken,
-                    userId: userInfo.value.userId, 
+
+            if (res.data) {
+                userInfo.value = {
+                    token: res.data?.idToken,
+                    email: res.data?.email,
+                    userId: res.data?.localId,
+                    refreshToken: res.data?.refreshToken,
                 }
-            ))
-        } catch (err) {
-            switch (err.response.data.error.message) {
-                case 'EMAIL_EXISTS':
-                error.value = 'Такая почта уже существует'
-                break;
-
-                case 'OPERATION_NOT_ALLOWED':
-                error.value = 'Данная операция не поддерживается'
-                break;
-
-                case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-                error.value = 'Слишком много попыток, попробуйте позже'
-                break;
-
-                case 'EMAIL_NOT_FOUND':
-                error.value = 'Такой Email не зарегистрирован'
-                break;
-
-                case 'INVALID_PASSWORD':
-                error.value = 'Не верный пароль'
-                break;
-
-                default:
-                error.value = 'Ошибка'
-                break;
+                
+                if (type === 'signup') {
+                    await setDoc(doc(db, "users", res.data?.localId), {
+                        id: res.data?.localId,
+                        nickname: '',
+                        room: ''
+                    });
+                }
+                
+                localStorage.setItem('userTokens', JSON.stringify(
+                    { 
+                        token: userInfo.value.token, 
+                        refreshToken: userInfo.value.refreshToken,
+                        userId: userInfo.value.userId, 
+                    }
+                ))
             }
+            else {
+                switch (res.response.data.error.message) {
+                    case 'EMAIL_EXISTS':
+                    error.value = 'Такая почта уже существует'
+                    break;
+    
+                    case 'OPERATION_NOT_ALLOWED':
+                    error.value = 'Данная операция не поддерживается'
+                    break;
+    
+                    case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+                    error.value = 'Слишком много попыток, попробуйте позже'
+                    break;
+    
+                    case 'EMAIL_NOT_FOUND':
+                    error.value = 'Такой Email не зарегистрирован'
+                    break;
+    
+                    case 'INVALID_PASSWORD':
+                    error.value = 'Неверный пароль'
+                    break;
+    
+                    case 'INVALID_EMAIL':
+                    error.value = 'Неверный Email'
+                    break;
+    
+                    case 'INVALID_LOGIN_CREDENTIALS':
+                    error.value = 'Неверный Email или пароль'
+                    break;
+    
+                    default:
+                    error.value = 'Ошибка'
+                    break;
+                }
+            }
+        } catch (err) {     
+            return
         } finally {
             loader.value = false;
         }

@@ -19,11 +19,11 @@ axiosApiInstance.interceptors.request.use((config) => {
     return config
 })
 
-axiosApiInstance.interceptors.response.use((response) => {
-        return response
-    }, async function (error) {
+axiosApiInstance.interceptors.response.use(
+    (response) => { return response }, 
+    async (error) => {
         const authStore = useAuthStore()
-        const originalRequest = error.config
+        const originalRequest = error.config 
 
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true
@@ -50,6 +50,8 @@ axiosApiInstance.interceptors.response.use((response) => {
                 authStore.userInfo.refreshToken = ''
             }
         }
+
+        return error
     }
 )
 
