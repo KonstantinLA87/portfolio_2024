@@ -83,12 +83,19 @@
           .chat__chat-message {
             background: #c2c1f3;
             color: #000;
+            padding: 2px 12px;
+            border-radius: 40px;
           }
         }
       }
     }
 
     &-username {
+      width: 100%;
+      font-weight: 700;
+      color: #828cc4;
+      font-size: 12px;
+      
       &.hiden {
         display: none;
       }

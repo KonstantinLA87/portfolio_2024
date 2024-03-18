@@ -2,6 +2,9 @@
     <div>
         <h1 class="chat__title">Чат</h1>
         <span class="chat__title-room">{{ currentRoom }}</span>
+        <Message severity="warn mb-6">
+            ВАЖНО: Пока данные затираются при преходе на другие вкладки, но в дальнейшем я собираюсь исправить этот функционал и сохранять переписку в комнатах на локальном сервере используя Node.js
+        </Message>
         <div class="chat__wrap">
             <div class="chat__users">
                 <span class="chat__users-title">Пользователи:</span>
@@ -30,13 +33,13 @@
                         }"
                     >
                         <div class="chat__chat-message">
-                            <span
+                            <p
                                 class="chat__chat-username"
                                 :class="{
                                     hiden: chat.username === currentUser || chat.username === 'Vue Chatapp Admin'
                                 }"
-                                >{{ chat.username }}:
-                            </span>
+                                >{{ chat.username }}
+                            </p>
                             <span class="chat__chat-text">{{ chat.text }} </span>
                             <span class="chat__chat-time"> {{ chat.time }}</span>
                         </div>
@@ -61,6 +64,7 @@ import { useAuthStore } from '@/stores/auth'
 
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
+import Message from 'primevue/message'
 
 import { type User, type Chat } from '@/types/chat'
 
