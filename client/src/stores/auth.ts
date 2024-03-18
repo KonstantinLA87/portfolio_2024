@@ -31,6 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
                 returnSecureToken: true,
             })
 
+            // если res != ошибка
             if (res.data) {
                 userInfo.value = {
                     token: res.data?.idToken,
@@ -55,6 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
                     }
                 ))
             }
+            // если res = ошибка
             else {
                 switch (res.response.data.error.message) {
                     case 'EMAIL_EXISTS':
@@ -90,8 +92,6 @@ export const useAuthStore = defineStore('auth', () => {
                     break;
                 }
             }
-        } catch (err) {     
-            return
         } finally {
             loader.value = false;
         }
