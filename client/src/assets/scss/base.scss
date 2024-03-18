@@ -25,22 +25,20 @@
 
 /* semantic color variables for this project */
 :root {
-  --background: var(--white);
-  --background-soft: var(--white-soft);
-  --background-mute: var(--white-mute);
-  
-  --border: var(--divider-light-2);
-  --border-hover: var(--divider-light-1);
-  
-  --heading: var(--text-light-1);
-  --text: var(--text-light-1);
-  
-  --gap: 160px;
+  --background: var(--black);
+    --background-soft: var(--black-soft);
+    --background-mute: var(--black-mute);
 
-  --main: #2f00ff;
-  --main-light: #687fff;
+    --border: var(--divider-dark-2);
+    --border-hover: var(--divider-dark-1);
 
-  --primal: #10b981;
+    --heading: var(--text-dark-1);
+    --text: var(--text-dark-1);
+
+    --main: #2f00ff;
+    --main-light: #687fff;
+
+    --primal: #10b981
 }
 
 @media (prefers-color-scheme: dark) {
