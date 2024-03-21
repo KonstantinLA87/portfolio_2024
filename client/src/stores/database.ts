@@ -7,7 +7,7 @@ export const useDatabaseStore = defineStore('database', () => {
     const cars = ref<CarsCompany[]>()
     const loader = ref(false)
 
-    const getAllCards = async () => {
+    const getAllCars = async () => {
         loader.value = true
         try {
             const { data } = await axiosApiInstance.get<CarsCompany[]>(`https://portfolio-2024-397ea-default-rtdb.europe-west1.firebasedatabase.app/cars.json`)
@@ -23,6 +23,6 @@ export const useDatabaseStore = defineStore('database', () => {
     return {
         cars,
         loader,
-        getAllCards,
+        getAllCars,
     }
 })
