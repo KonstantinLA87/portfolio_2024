@@ -4,4 +4,19 @@
     flex-direction: column;
     gap: 10px;
   }
+
+  &__form {
+    padding-bottom: 30px;
+
+    h2 {
+      margin-bottom: 30px;
+    }
+
+    &-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px 20px;
+      margin-bottom: 20px;
+    }
+  }
 }
