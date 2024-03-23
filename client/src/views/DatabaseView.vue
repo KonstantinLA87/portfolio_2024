@@ -4,7 +4,7 @@
         <LoaderSpinner v-if="databaseStore.loader" />
         <div v-else class="flex flex-column gap-3">
             <Message severity="warn">
-                ВАЖНО: Если вы видите это сообщение, значит данный раздел пока что находится на стадии разработки. Реализован функционал вывода/добавления данных. В ближайшие будет добавлен функционал удаления/редактирования.
+                ВАЖНО: Реализован функционал вывода/добавления данных. В ближайшие будет добавлен функционал удаления/редактирования.
             </Message>
             <DataTable :value="cars" stripedRows>
                 <Column sortable field="company" header="Производитель" style="width: 25%" />
