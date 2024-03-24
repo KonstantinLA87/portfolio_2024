@@ -5,6 +5,13 @@
     gap: 10px;
   }
 
+  &__table {
+    &-remove {
+      color: red;
+      cursor: pointer;
+    }
+  }
+
   &__form {
     padding-bottom: 30px;
 

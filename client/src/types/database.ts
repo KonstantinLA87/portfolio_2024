@@ -3,6 +3,7 @@ export enum CarTypes {
     CUPE = 'cupe',
     SPORT = 'sport',
     SUVS = 'suvs',
+    UNIVERSAL = 'universal',
 }
 
 export type CarType = CarTypes
