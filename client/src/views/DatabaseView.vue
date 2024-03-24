@@ -3,7 +3,7 @@
         <h1>База данных</h1>
         <LoaderSpinner v-if="databaseStore.loader" />
         <div v-else class="flex flex-column gap-3">
-            <DataTable :value="carsArray" stripedRows class="mb-6">
+            <DataTable :value="carsArray" stripedRows class="mb-6" paginator :rows="5">
                 <Column sortable field="company" header="Производитель" style="width: 25%" />
                 <Column sortable field="model" header="Модель" style="width: 30%" />
                 <Column sortable field="type" header="Тип" style="width: 20%" />

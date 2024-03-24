@@ -161,6 +161,17 @@ a {
   border-bottom: none;
 }
 
+.p-paginator {
+  background: transparent;
+
+  .p-paginator-pages .p-paginator-page.p-highlight {
+    background: var(--primal);
+    color: var(--white);
+  }
+}
+
+
+
 .loader-spinner__wrap {
   width: 100%;
   height: 100%;
