@@ -6,7 +6,7 @@
         <template v-slot:left>
             <InvisibleSaveBtn 
                 label="Никнейм"
-                :some="nickname"
+                :text="nickname"
                 :valueOrigin="nicknameOrigin"
                 :onClick="saveNickname"
             >
@@ -16,7 +16,7 @@
             </InvisibleSaveBtn>
             <InvisibleSaveBtn 
                 label="Выберите чат"
-                :some="room"
+                :text="room"
                 :valueOrigin="roomOrigin"
                 :onClick="saveRoom"
             >

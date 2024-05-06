@@ -21,7 +21,7 @@ import Button from 'primevue/button'
 import FloatLabel from 'primevue/floatlabel'
 
 interface Props {
-    some: string
+    text: string
     valueOrigin: string
     label: string
     onClick: () => void
@@ -31,13 +31,9 @@ const props = defineProps<Props>()
 const isShowBtn = ref(false)
 
 watch(
-    () => [props.some, props.valueOrigin],
-    ([some, valueOrigin]) => {
-        if (some !== valueOrigin) {
-            isShowBtn.value = true
-        } else {
-            isShowBtn.value = false
-        }
+    () => [props.text, props.valueOrigin],
+    ([text, valueOrigin]) => {
+        isShowBtn.value = text !== valueOrigin
     }
 )
 </script>
