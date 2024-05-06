@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed } from 'vue'
 import Button from 'primevue/button'
 import FloatLabel from 'primevue/floatlabel'
 
@@ -28,12 +28,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const isShowBtn = ref(false)
-
-watch(
-    () => [props.text, props.valueOrigin],
-    ([text, valueOrigin]) => {
-        isShowBtn.value = text !== valueOrigin
-    }
-)
+const isShowBtn = computed(() => {
+    return props.text !== props.valueOrigin
+})
 </script>
